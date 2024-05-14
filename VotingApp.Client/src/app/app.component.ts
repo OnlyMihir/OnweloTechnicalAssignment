@@ -33,5 +33,13 @@ export class AppComponent implements OnInit {
     );
   }
 
+  addVoter() {
+
+  }
+
+  addCandidate() {
+
+  }
+
   title = 'votingapp.client';
 }
