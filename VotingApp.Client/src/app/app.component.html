@@ -8,7 +8,7 @@
           <tr>
             <th colspan="2">
               <div class="row">
-                <div class="col-11">Voters</div>
+                <div class="col-11 text-center">Voters</div>
                 <div class="col-1 p-0"><button type="button" (click)="toggleAddVoterRow()" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></div>
               </div>
             </th>
@@ -40,7 +40,7 @@
           <tr>
             <th colspan="2">
               <div class="row">
-                <div class="col-11">Candidates</div>
+                <div class="col-11 text-center">Candidates</div>
                 <div class="col-1 p-0"><button type="button" (click)="toggleAddCandidateRow()" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></div>
               </div>
             </th>
@@ -73,19 +73,21 @@
   <h1>Vote!</h1>
   <div class="row">
     <div class="col-2">
-      <select class="form-select" aria-label="Default select example">
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="selectedVoterId">
         <option selected value="-1">I am</option>
-        <option *ngFor="let voter of voters" [value]="voter.id">{{ voter.name }}</option>
+        <ng-container *ngFor="let voter of voters">
+          <option [value]="voter.id" *ngIf="!voter.hasVoted">{{ voter.name }}</option>
+        </ng-container>
       </select>
     </div>
     <div class="col-2 mr-0">
-      <select class="form-select" aria-label="Default select example">
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="selectedCandidateId">
         <option selected value="-1">I vote for</option>
         <option *ngFor="let candidate of candidates" [value]="candidate.id">{{ candidate.name }}</option>
       </select>
     </div>
     <div class="col-1 ml-0 align-left">
-      <button type="button" class="btn btn-primary">Submit!</button>
+      <button type="button" class="btn btn-primary" (click)="castVote()">Submit!</button>
     </div>
     </div>
   </div>

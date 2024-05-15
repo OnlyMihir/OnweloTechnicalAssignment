@@ -25,6 +25,8 @@ export class AppComponent implements OnInit {
   public newVoterName: string = "";
   public showAddCandidateRow: boolean = false;
   public newCandidateName: string = "";
+  public selectedVoterId: string = "-1"; // for casting vote
+  public selectedCandidateId: string = "-1"; // for casting vote
 
   constructor(private http: HttpClient) {}
 
@@ -93,6 +95,37 @@ export class AppComponent implements OnInit {
         }
       );
     }
+  }
+
+  castVote() {
+    if (this.selectedVoterId === '-1' || this.selectedCandidateId === '-1') {
+      alert('Please select both voter and candidate before submitting.');
+      return;
+    }
+
+    var voterId = this.selectedVoterId;
+    var candidateId = this.selectedCandidateId;
+    const castVoteData = { VoterId: voterId, CandidateId: candidateId };
+
+    this.http.post<any>('/api/voting/castvote', castVoteData).subscribe(
+      response => {
+        const selectedVoter = this.voters.find(voter => voter.id === voterId);
+        if (selectedVoter) {
+          selectedVoter.hasVoted = true;
+        }
+
+        const selectedCandidate = this.candidates.find(candidate => candidate.id == candidateId);
+        if (selectedCandidate) {
+          selectedCandidate.votes++;
+        }
+      },
+      error => {
+        console.error(error);
+      }
+    );
+
+    this.selectedVoterId = "-1";
+    this.selectedCandidateId = "-1";
   }
 
   title = 'votingapp.client';
