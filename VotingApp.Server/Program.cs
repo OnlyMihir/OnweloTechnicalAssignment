@@ -1,3 +1,5 @@
+using VotingApp.Server.Services;
+using VotingApp.Server.Services.Interfaces;
 
 namespace VotingApp.Server
 {
@@ -7,9 +9,12 @@ namespace VotingApp.Server
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
+
+            // Add services to the container.
+            builder.Services.AddSingleton<DataManager>();
+            builder.Services.AddSingleton<IVotingService, VotingService>();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
