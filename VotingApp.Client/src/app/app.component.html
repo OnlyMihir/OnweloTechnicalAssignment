@@ -1,0 +1,93 @@
+<div class="container mt-4 border-bottom border-black">
+  <h1 id="tableLabel">Voting App</h1>
+
+  <div class="row">
+    <div class="col">
+      <table class="table table-bordered table-responsive">
+        <thead>
+          <tr>
+            <th colspan="2">
+              <div class="row">
+                <div class="col-11 text-center">Voters</div>
+                <div class="col-1 p-0"><button type="button" (click)="toggleAddVoterRow()" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></div>
+              </div>
+            </th>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <th>Has Voted?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let voter of voters">
+            <td>{{ voter.name }}</td>
+            <td>{{ voter.hasVoted }}</td>
+          </tr>
+          <tr *ngIf="showAddVoterRow">
+            <td>
+              <input type="text" [(ngModel)]="newVoterName">
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary" (click)="saveVoter()">Save</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col">
+      <table class="table table-bordered table-responsive">
+        <thead>
+          <tr>
+            <th colspan="2">
+              <div class="row">
+                <div class="col-11 text-center">Candidates</div>
+                <div class="col-1 p-0"><button type="button" (click)="toggleAddCandidateRow()" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></div>
+              </div>
+            </th>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <th>Votes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let candidate of candidates">
+            <td>{{ candidate.name }}</td>
+            <td>{{ candidate.votes }}</td>
+          </tr>
+          <tr *ngIf="showAddCandidateRow">
+            <td>
+              <input type="text" [(ngModel)]="newCandidateName">
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary" (click)="saveCandidate()">Save</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <h1>Vote!</h1>
+  <div class="row">
+    <div class="col-2">
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="selectedVoterId">
+        <option selected value="-1">I am</option>
+        <ng-container *ngFor="let voter of voters">
+          <option [value]="voter.id" *ngIf="!voter.hasVoted">{{ voter.name }}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div class="col-2 mr-0">
+      <select class="form-select" aria-label="Default select example" [(ngModel)]="selectedCandidateId">
+        <option selected value="-1">I vote for</option>
+        <option *ngFor="let candidate of candidates" [value]="candidate.id">{{ candidate.name }}</option>
+      </select>
+    </div>
+    <div class="col-1 ml-0 align-left">
+      <button type="button" class="btn btn-primary" (click)="castVote()">Submit!</button>
+    </div>
+    </div>
+  </div>
