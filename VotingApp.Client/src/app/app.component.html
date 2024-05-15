@@ -9,7 +9,7 @@
             <th colspan="2">
               <div class="row">
                 <div class="col-11">Voters</div>
-                <div class="col-1 p-0"><button type="button" (click)="addVoter()" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></div>
+                <div class="col-1 p-0"><button type="button" (click)="toggleAddVoterRow()" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></div>
               </div>
             </th>
           </tr>
@@ -23,6 +23,14 @@
             <td>{{ voter.name }}</td>
             <td>{{ voter.hasVoted }}</td>
           </tr>
+          <tr *ngIf="showAddVoterRow">
+            <td>
+              <input type="text" [(ngModel)]="newVoterName">
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary" (click)="saveVoter()">Save</button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -33,7 +41,7 @@
             <th colspan="2">
               <div class="row">
                 <div class="col-11">Candidates</div>
-                <div class="col-1 p-0"><button type="button" (click)="addCandidate()" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></div>
+                <div class="col-1 p-0"><button type="button" (click)="toggleAddCandidateRow()" class="btn btn-primary"><i class="bi bi-plus-circle"></i></button></div>
               </div>
             </th>
           </tr>
@@ -46,6 +54,14 @@
           <tr *ngFor="let candidate of candidates">
             <td>{{ candidate.name }}</td>
             <td>{{ candidate.votes }}</td>
+          </tr>
+          <tr *ngIf="showAddCandidateRow">
+            <td>
+              <input type="text" [(ngModel)]="newCandidateName">
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary" (click)="saveCandidate()">Save</button>
+            </td>
           </tr>
         </tbody>
       </table>
